@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {OpenapiEditorLibModule} from "../../../projects/openapi-editor-lib/src/lib/openapi-editor-lib.module";
+import {ORIGINAL} from "./original";
+import {MODIFIED} from "./modified";
 
 @Component({
   selector: 'app-editor-diff',
@@ -10,7 +12,7 @@ import {OpenapiEditorLibModule} from "../../../projects/openapi-editor-lib/src/l
   styleUrls: ['./editor-diff.component.css']
 })
 export class EditorDiffComponent {
-  original = 'function x() {\nconsole.log("Hello world!");\n}';
-  modified = 'function y() {\nconsole.log("Hello world!");\n}';
+  original = JSON.stringify(ORIGINAL, null, 2);
+  modified = JSON.stringify(MODIFIED, null, 2);
 
 }

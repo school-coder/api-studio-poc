@@ -30,7 +30,9 @@ export class EditorComponent extends BaseEditorComponent {
 
     initMonaco(options: any): void {
         let modelUri = monaco.Uri.parse('a://b/foo.json');
-        let model = monaco.editor.createModel(this.content, this.mode, modelUri);
+
+
+        let model = monaco.editor.getModel(modelUri) ?? monaco.editor.createModel(this.content, this.mode, modelUri);
 
         monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
             validate: true,

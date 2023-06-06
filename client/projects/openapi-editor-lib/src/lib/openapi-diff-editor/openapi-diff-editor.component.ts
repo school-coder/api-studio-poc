@@ -11,7 +11,7 @@ declare var monaco: any;
     styles: [`
       :host {
           display: block;
-          height: 600px;
+          height: calc(100vh - 60px);
       }
       .editor-container {
           width: 100%;
@@ -38,6 +38,7 @@ export class OpenapiDiffEditorComponent extends BaseEditorComponent {
         const modifiedModel = monaco.editor.createModel(this.modified, this.mode);
 
         const diffEditor = monaco.editor.createDiffEditor(this.editorElementRef?.nativeElement, {
+                originalEditable: false,
                 automaticLayout: true,
             }
         );
@@ -46,5 +47,7 @@ export class OpenapiDiffEditorComponent extends BaseEditorComponent {
             original: originalModel,
             modified: modifiedModel
         });
+
+        diffEditor.getModifiedEditor().updateOptions({ readOnly: true });
     }
 }
