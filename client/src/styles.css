@@ -1,6 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 /* You can add global styles to this file, and also import other style files */
 
+app-header {
+    height: 60px;
+    display: flex;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
 
 :root {
     --primary-900: #F6FAFE;

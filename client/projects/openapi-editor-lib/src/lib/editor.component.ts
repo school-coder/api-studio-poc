@@ -12,7 +12,7 @@ declare var monaco: any;
     styles: [`
         :host {
             display: block;
-            height: 600px;
+            height: calc(100vh - 60px);
         }
 
         .editor-container {
