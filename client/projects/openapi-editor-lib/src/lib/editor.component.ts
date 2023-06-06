@@ -23,13 +23,52 @@ export class EditorComponent extends BaseEditorComponent {
 
   @ViewChild('editor') editorElementRef: ElementRef | undefined;
 
+  @Input() mode: 'json' | 'yaml' = 'json';
+  @Input() content: string = ["{", '    "p1": "v3",', '    "p2": false', "}"].join("\n");
+
   @Input()
   set options(options: any) {
     this._options = options;
   };
 
   initMonaco(options: any): void {
-    monaco.editor.create(this.editorElementRef?.nativeElement, options)
+    let modelUri = monaco.Uri.parse('a://b/foo.json');
+    let model = monaco.editor.createModel(this.content, this.mode, modelUri);
+
+    monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
+        validate: true,
+        schemas: [{
+            uri: "http://myserver/foo-schema.json",
+            fileMatch: [modelUri.toString()],
+            schema: {
+                type: "object",
+                properties: {
+                    p1: {
+                        enum: ["v1", "v2"]
+                    },
+                    p2: {
+                        $ref: "http://myserver/bar-schema.json"
+                    }
+                }
+            }
+        },
+        {
+            uri: "http://myserver/bar-schema.json",
+            schema: {
+                type: "object",
+                properties: {
+                    q1: {
+                        enum: ["x1", "x2"]
+                    }
+                }
+            }
+        }
+        ]
+    });
+
+    monaco.editor.create(this.editorElementRef?.nativeElement, {
+        model,
+    })
   }
 
 }
